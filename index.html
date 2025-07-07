@@ -11,7 +11,6 @@
       padding: 0;
     }
 
-
     body {
       font-family: Arial, sans-serif;
     }
@@ -25,10 +24,10 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
+    .logo img {
+      height: 40px;
+      width: auto;
+      display: block;
     }
 
     .header-right {
@@ -78,45 +77,5 @@
 <body>
 
   <header>
-    <div class="logo">Ma Boutique</div>
-    <div class="header-right">
-      <form class="search-form" id="searchForm">
-        <input type="text" id="searchInput" placeholder="Rechercher..." />
-      </form>
-
-      <button class="icon-btn" aria-label="User">
-        <img src="https://www.svgrepo.com/show/384674/user.svg" alt="Icône utilisateur" />
-      </button>
-      <button class="icon-btn" aria-label="Search" id="searchToggle">
-        <img src="https://www.svgrepo.com/show/488200/search.svg" alt="Icône recherche" />
-      </button>
-      <button class="icon-btn" aria-label="Cart">
-        <img src="https://www.svgrepo.com/show/506761/shopping-bag.svg" alt="Icône panier" />
-      </button>
-    </div>
-  </header>
-
-  <script>
-    const searchToggle = document.getElementById("searchToggle");
-    const searchForm = document.getElementById("searchForm");
-    const searchInput = document.getElementById("searchInput");
-
-    searchToggle.addEventListener("click", () => {
-      searchForm.classList.toggle("show");
-      if (searchForm.classList.contains("show")) {
-        searchInput.focus();
-      }
-    });
-
-    searchForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const query = searchInput.value.trim();
-      if (query) {
-        alert("Recherche : " + query);
-        // Tu peux ici rediriger vers une page ou faire un filtrage JS
-      }
-    });
-  </script>
-
-</body>
-</html>
+    <div class="logo">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEhIPDxAPDxANEBAQEA8PEA8PDw8QFREWFhUVFRUYHSggGBolJxYVITEhJSkrLi4xFyAzODMsNygtLisBCgoKDg0OGhAQGy4lICYrLS8tLjAtLS0tLy8tLS0tLS0tLS0tLS0uNS0tLS4tLS0tLS0tLS0tLS0tL
