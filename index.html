@@ -28,6 +28,7 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      gap: 1rem;
     }
 
     .logo {
@@ -36,6 +37,8 @@
       color: #000;
       user-select: none;
       transition: transform 0.3s ease;
+      flex-shrink: 0;
+      cursor: default;
     }
     .logo:hover {
       transform: scale(1.25);
@@ -44,8 +47,14 @@
       cursor: pointer;
     }
 
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      flex-shrink: 0;
+    }
+
     nav a {
-      margin-left: 25px;
       text-decoration: none;
       color: #000;
       font-weight: 900;
@@ -58,6 +67,35 @@
       color: #ff3f8b;
       transform: scale(1.15);
       text-shadow: 0 0 8px #ff3f8b;
+    }
+
+    /* Barre de recherche */
+    .search-container {
+      flex-grow: 1;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      border: 2px solid #ff3f8b;
+      border-radius: 25px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+      color: #000;
+    }
+
+    .search-container input::placeholder {
+      color: #ff3f8b;
+      font-weight: 600;
+    }
+
+    .search-container input:focus {
+      box-shadow: 0 0 8px #ff3f8b;
     }
 
     h1 {
@@ -161,6 +199,11 @@
 
   <header>
     <div class="logo">kenzoo</div>
+
+    <div class="search-container">
+      <input type="search" id="search" placeholder="Rechercher un produit..." aria-label="Recherche produit" />
+    </div>
+
     <nav>
       <a href="#accueil">Accueil</a>
       <a href="#produits">Produits</a>
@@ -171,32 +214,32 @@
   <h1 id="accueil">Bienvenue chez kenzoo</h1>
 
   <section class="products" id="produits">
-    <div class="product">
+    <div class="product" data-name="Fraise Glacée">
       <img src="https://via.placeholder.com/230x230/ff80ab/ffffff?text=Fraise" alt="Fraise Glacée" />
       <h3>Fraise Glacée</h3>
       <p>800 bouffées – 20mg</p>
     </div>
-    <div class="product">
+    <div class="product" data-name="Mangue Givrée">
       <img src="https://via.placeholder.com/230x230/ffd180/ffffff?text=Mangue" alt="Mangue Givrée" />
       <h3>Mangue Givrée</h3>
       <p>800 bouffées – 20mg</p>
     </div>
-    <div class="product">
+    <div class="product" data-name="Raisin Violet">
       <img src="https://via.placeholder.com/230x230/ce93d8/ffffff?text=Raisin" alt="Raisin Violet" />
       <h3>Raisin Violet</h3>
       <p>800 bouffées – 20mg</p>
     </div>
-    <div class="product">
+    <div class="product" data-name="Pastèque Fraîche">
       <img src="https://via.placeholder.com/230x230/a5d6a7/ffffff?text=Pastèque" alt="Pastèque Fraîche" />
       <h3>Pastèque Fraîche</h3>
       <p>800 bouffées – 20mg</p>
     </div>
-    <div class="product">
+    <div class="product" data-name="Myrtille Ice">
       <img src="https://via.placeholder.com/230x230/90caf9/ffffff?text=Myrtille" alt="Myrtille Ice" />
       <h3>Myrtille Ice</h3>
       <p>800 bouffées – 20mg</p>
     </div>
-    <div class="product">
+    <div class="product" data-name="Ananas Twist">
       <img src="https://via.placeholder.com/230x230/ffe082/ffffff?text=Ananas" alt="Ananas Twist" />
       <h3>Ananas Twist</h3>
       <p>800 bouffées – 20mg</p>
@@ -211,6 +254,22 @@
     document.addEventListener('mousemove', e => {
       cursor.style.left = (e.clientX - 12) + 'px';
       cursor.style.top = (e.clientY - 12) + 'px';
+    });
+
+    // Fonction de recherche en temps réel
+    const searchInput = document.getElementById('search');
+    const products = document.querySelectorAll('.product');
+
+    searchInput.addEventListener('input', () => {
+      const filter = searchInput.value.toLowerCase();
+      products.forEach(product => {
+        const name = product.getAttribute('data-name').toLowerCase();
+        if (name.includes(filter)) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
     });
   </script>
 </body>
