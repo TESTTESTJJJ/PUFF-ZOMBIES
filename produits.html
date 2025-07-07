@@ -5,11 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kenzoo™ – Nos Puffs</title>
   <style>
+    * {
+      cursor: none;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(145deg, #ffe0e0, #ffeacc);
       color: #333;
+      overflow-x: hidden;
     }
 
     header {
@@ -55,6 +60,13 @@
       width: 220px;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .product:hover {
+      transform: scale(1.1) rotateZ(1deg);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      z-index: 2;
     }
 
     .product img {
@@ -73,6 +85,25 @@
       font-size: 0.9rem;
       color: #666;
     }
+
+    /* Curseur personnalisé */
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, rgba(255,192,203,0.8), transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 0 10px 5px rgba(255, 192, 203, 0.5);
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.6; }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -89,6 +120,7 @@
   <h1>Nos Puffs Kenzoo™</h1>
 
   <section class="products">
+    <!-- Produits -->
     <div class="product">
       <img src="https://via.placeholder.com/200x200/ff80ab/ffffff?text=Fraise" alt="Fraise">
       <h3>Fraise Glacée</h3>
@@ -122,8 +154,20 @@
   </section>
 
   <footer>
-    © 2025 Kenzoo™ — Catalogue fictif de démonstration.
+    © 2025 Kenzoo™ — Catalogue fictif.
   </footer>
+
+  <!-- Curseur personnalisé -->
+  <div class="cursor" id="cursor"></div>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = `${e.clientX - 10}px`;
+      cursor.style.top = `${e.clientY - 10}px`;
+    });
+  </script>
 
 </body>
 </html>
