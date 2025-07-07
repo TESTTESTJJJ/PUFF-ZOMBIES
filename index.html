@@ -2,83 +2,111 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Puffs Zombie Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puff Zombies</title>
   <style>
-    body { margin:0; font-family: 'Helvetica Neue', sans-serif; background:white; color:#111; }
-    header { padding:2rem; text-align:center; border-bottom:1px solid #eee; }
-    .container { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:20px; padding:20px; }
-    .product { border:1px solid #ddd; border-radius:10px; padding:15px; text-align:center; }
-    .product img { max-width:100px; margin-bottom:10px; }
-    select, button { margin-top:10px; padding:8px; width:100%; border-radius:5px; border:1px solid #ccc; }
-    button { background:black; color:white; cursor:pointer; }
-    button:hover { background:#333; }
-    #cart { padding:20px; border-top:1px solid #eee; }
-    .cart-item { margin-bottom:8px; }
-    .checkout { display:inline-block; margin-top:15px; padding:10px 20px; background:#111; color:#fff; border-radius:5px; text-decoration:none; }
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: white;
+      color: #111;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #eee;
+    }
+    .logo {
+      height: 40px;
+    }
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .search {
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .cart-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 2rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .card img {
+      max-width: 100px;
+    }
+    .btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <header>
+    <img src="https://i.imgur.com/9OQW5Fg.png" alt="Logo" class="logo" />
+    <div class="title">Puff Zombies</div>
+    <div class="header-right">
+      <input type="text" placeholder="Rechercher..." class="search" />
+      <button class="cart-btn">Panier</button>
+    </div>
+  </header>
 
-<header>
-  <h1>Puff Store Zombie Edition 💨</h1>
-  <p>Designs exclusifs zombies + goûts au choix — commande via WhatsApp</p>
-</header>
+  <main class="grid">
+    <div class="card">
+      <img src="https://i.imgur.com/9OQW5Fg.png" alt="Puff 10K" />
+      <h3>10K</h3>
+      <button class="btn" onclick="selectFlavor('10K')">Voir les goûts</button>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/bdL6FhX.png" alt="Puff 15K" />
+      <h3>15K</h3>
+      <button class="btn" onclick="selectFlavor('15K')">Voir les goûts</button>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/IBZMeJc.png" alt="Puff 22K" />
+      <h3>22K</h3>
+      <button class="btn" onclick="selectFlavor('22K')">Voir les goûts</button>
+    </div>
+    <div class="card">
+      <img src="https://i.imgur.com/uqZglph.png" alt="Puff 45K" />
+      <h3>45K</h3>
+      <button class="btn" onclick="selectFlavor('45K')">Voir les goûts</button>
+    </div>
+  </main>
 
-<div class="container" id="product-list"></div>
-
-<div id="cart">
-  <h2>🛒 Panier</h2>
-  <div id="cart-items"></div>
-  <a class="checkout" id="checkout-btn" target="_blank">Commander sur WhatsApp</a>
-</div>
-
-<script>
-const flavors = ['Fraise Zombie','Mangue Sanglante','Citron Acidulé','Pastèque Venimeuse'];
-const capacities = ['15K','22K','45K'];
-let cart = [];
-
-const productList = document.getElementById('product-list');
-flavors.forEach((flavor, i)=> {
-  const div = document.createElement('div');
-  div.className = 'product';
-  div.innerHTML = `
-    <img src="${getImageUrl(i)}" alt="Puff ${flavor}">
-    <h3>${flavor}</h3>
-    <select id="size-${i}">
-      ${capacities.map(c=>`<option value="${c}">${c}</option>`).join('')}
-    </select>
-    <p>Stock : 99</p>
-    <button onclick="addToCart('${flavor}', document.getElementById('size-${i}').value)">Ajouter au panier</button>
-  `;
-  productList.appendChild(div);
-});
-
-function getImageUrl(i){
-  const images = [
-    'https://i.imgur.com/9OQW5Fg.png', // Image 1 Zombie Puff
-    'https://i.imgur.com/bdL6FhX.png', // Image 2
-    'https://i.imgur.com/IBZMeJc.png', // Image 3
-    'https://i.imgur.com/uqZglph.png'  // Image 4
-  ];
-  return images[i % images.length];
-}
-
-function addToCart(flavor, size){
-  cart.push({ flavor, size });
-  renderCart();
-}
-
-function renderCart(){
-  const el = document.getElementById('cart-items');
-  el.innerHTML = '';
-  cart.forEach(item => {
-    el.innerHTML += `<div class="cart-item">${item.flavor} - ${item.size}</div>`;
-  });
-  const message = cart.map(item => `${item.flavor} (${item.size})`).join(', ');
-  document.getElementById('checkout-btn').href = `https://wa.me/33644942208?text=${encodeURIComponent("Je souhaite commander : " + message)}`;
-}
-</script>
-
+  <script>
+    function selectFlavor(capacity) {
+      alert("Affichage des goûts pour les Puffs " + capacity);
+      // Ici tu peux créer une page modale ou rediriger vers une autre page avec les goûts disponibles.
+    }
+  </script>
 </body>
 </html>
