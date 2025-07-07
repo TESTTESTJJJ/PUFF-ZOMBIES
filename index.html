@@ -1,276 +1,438 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>kenzoo – Accueil</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>kenzoo – Accueil</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
-    body, html {
-      margin: 0; padding: 0;
-      height: 100%;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      color: #000;
-      background: #000;
-      overflow-x: hidden;
-      cursor: none;
-      position: relative;
-    }
+  body, html {
+    margin: 0; padding: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    background: #000;
+    color: #000;
+    overflow-x: hidden;
+  }
 
-    header {
-      position: relative;
-      z-index: 10;
-      background-color: rgba(255 255 255 / 0.95);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-      gap: 1rem;
-    }
+  header {
+    background: rgba(255 255 255 / 0.95);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 100;
+  }
 
-    .logo {
-      font-size: 2.4rem;
-      font-weight: 900;
-      color: #000;
-      user-select: none;
-      transition: transform 0.3s ease;
-      flex-shrink: 0;
-      cursor: default;
-    }
-    .logo:hover {
-      transform: scale(1.25);
-      color: #ff3f8b;
-      text-shadow: 0 0 10px #ff3f8b;
-      cursor: pointer;
-    }
+  .logo {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+    flex-shrink: 0;
+  }
+  .logo:hover {
+    transform: scale(1.25);
+    color: #ff3f8b;
+    text-shadow: 0 0 10px #ff3f8b;
+  }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 25px;
-      flex-shrink: 0;
-    }
+  nav {
+    display: flex;
+    gap: 25px;
+    flex-shrink: 0;
+  }
+  nav a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 900;
+    font-size: 1.1rem;
+    transition: transform 0.3s, color 0.3s, text-shadow 0.3s;
+    user-select: none;
+  }
+  nav a:hover {
+    color: #ff3f8b;
+    transform: scale(1.15);
+    text-shadow: 0 0 8px #ff3f8b;
+  }
 
-    nav a {
-      text-decoration: none;
-      color: #000;
-      font-weight: 900;
-      font-size: 1.1rem;
-      transition: transform 0.3s ease, color 0.3s ease;
-      user-select: none;
-      cursor: pointer;
-    }
-    nav a:hover {
-      color: #ff3f8b;
-      transform: scale(1.15);
-      text-shadow: 0 0 8px #ff3f8b;
-    }
+  .search-container {
+    flex-grow: 1;
+    max-width: 400px;
+    position: relative;
+  }
+  .search-container input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    border: 2px solid #ff3f8b;
+    border-radius: 25px;
+    outline: none;
+    color: #000;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s;
+  }
+  .search-container input::placeholder {
+    color: #ff3f8b;
+    font-weight: 600;
+  }
+  .search-container input:focus {
+    box-shadow: 0 0 8px #ff3f8b;
+  }
 
-    /* Barre de recherche */
-    .search-container {
-      flex-grow: 1;
-      max-width: 400px;
-      position: relative;
-    }
+  .suggestions {
+    position: absolute;
+    top: 110%;
+    left: 0; right: 0;
+    background: white;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 200;
+    font-weight: 700;
+  }
+  .suggestions div {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+  }
+  .suggestions div:last-child {
+    border-bottom: none;
+  }
+  .suggestions div:hover {
+    background-color: #ff3f8b;
+    color: white;
+  }
 
-    .search-container input {
-      width: 100%;
-      padding: 0.5rem 1rem;
-      font-weight: 700;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      border: 2px solid #ff3f8b;
-      border-radius: 25px;
-      outline: none;
-      transition: box-shadow 0.3s ease;
-      color: #000;
-    }
+  h1 {
+    text-align: center;
+    margin: 3rem 2rem 2rem;
+    color: #000;
+    font-weight: 900;
+    text-shadow: 0 0 10px #ff3f8b;
+    user-select: none;
+    position: relative;
+    z-index: 10;
+  }
 
-    .search-container input::placeholder {
-      color: #ff3f8b;
-      font-weight: 600;
-    }
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0 2rem 4rem;
+    position: relative;
+    z-index: 10;
+  }
 
-    .search-container input:focus {
-      box-shadow: 0 0 8px #ff3f8b;
-    }
+  .product {
+    background: #fff;
+    border-radius: 12px;
+    width: 230px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    user-select: none;
+  }
+  .product:hover {
+    transform: scale(1.1) rotateZ(4deg);
+    box-shadow: 0 20px 35px rgba(255, 63, 139, 0.6);
+    z-index: 20;
+  }
+  .product img {
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+  }
+  .product h3 {
+    margin: 0.5rem 0 0.2rem;
+  }
+  .product p {
+    margin: 0 0 1rem;
+    color: #555;
+  }
 
-    h1 {
-      text-align: center;
-      margin: 4rem 2rem 2rem;
-      color: #000;
-      font-weight: 900;
-      text-shadow: 0 0 10px #ff3f8b;
-      user-select: none;
-      position: relative;
-      z-index: 10;
-    }
+  footer {
+    text-align: center;
+    padding: 2rem;
+    background: #fff3f6;
+    font-size: 0.9rem;
+    color: #666;
+    position: relative;
+    z-index: 10;
+    user-select: none;
+  }
 
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      padding: 0 2rem 4rem;
-      position: relative;
-      z-index: 10;
-    }
+  /* Modal */
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal-bg.active {
+    display: flex;
+  }
+  .modal {
+    background: white;
+    border-radius: 15px;
+    max-width: 800px;
+    width: 90%;
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(255, 63, 139, 0.8);
+    position: relative;
+  }
+  .modal img {
+    width: 300px;
+    border-radius: 15px;
+    user-select: none;
+  }
+  .modal-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .modal-content h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #000;
+  }
+  .modal-content p {
+    margin: 0.5rem 0 1rem;
+    color: #444;
+    font-weight: 700;
+  }
+  .modal-content .price {
+    font-size: 1.5rem;
+    color: #ff3f8b;
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+  .modal-content .stock {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #333;
+  }
+  .modal-content button {
+    background: #ff3f8b;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: 900;
+    font-size: 1.1rem;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    box-shadow: 0 0 12px #ff3f8b;
+    transition: background 0.3s ease;
+  }
+  .modal-content button:hover {
+    background: #e3307a;
+  }
 
-    .product {
-      background: #fff;
-      border-radius: 12px;
-      width: 230px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition:
-        transform 0.4s ease,
-        box-shadow 0.4s ease;
-      user-select: none;
-      cursor: pointer;
-    }
-
-    .product:hover {
-      transform: scale(1.1) rotateZ(4deg);
-      box-shadow: 0 20px 35px rgba(255, 63, 139, 0.6);
-      z-index: 20;
-    }
-
-    .product img {
-      width: 100%;
-      border-radius: 12px 12px 0 0;
-      user-select: none;
-    }
-
-    .product h3 {
-      color: #000;
-      margin: 0.5rem 0 0.2rem;
-      font-weight: 900;
-      user-select: none;
-    }
-
-    .product p {
-      margin: 0 0 1rem;
-      font-weight: 700;
-      color: #555;
-      user-select: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background: #fff3f6;
-      font-size: 0.9rem;
-      color: #666;
-      position: relative;
-      z-index: 10;
-      user-select: none;
-    }
-
-    /* Curseur personnalisé */
-    .cursor {
-      position: fixed;
-      top: 0; left: 0;
-      width: 24px; height: 24px;
-      background: radial-gradient(circle, rgba(255,63,139,0.9), transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      box-shadow: 0 0 12px 6px rgba(255,63,139,0.7);
-      animation: pulse 1.2s infinite ease-in-out;
-      mix-blend-mode: screen;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.5);
-        opacity: 0.6;
-      }
-    }
-  </style>
+  .modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2rem;
+    font-weight: 900;
+    cursor: pointer;
+    color: #ff3f8b;
+    user-select: none;
+    transition: transform 0.3s ease;
+  }
+  .modal-close:hover {
+    transform: rotate(90deg);
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">kenzoo</div>
+<header>
+  <div class="logo">kenzoo</div>
+  <div class="search-container">
+    <input type="search" id="search" placeholder="Rechercher un produit..." autocomplete="off" aria-label="Recherche produit" />
+    <div class="suggestions" id="suggestions" style="display:none;"></div>
+  </div>
+  <nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#produits">Produits</a>
+    <a href="#">Panier</a>
+  </nav>
+</header>
 
-    <div class="search-container">
-      <input type="search" id="search" placeholder="Rechercher un produit..." aria-label="Recherche produit" />
-    </div>
+<h1 id="accueil">Bienvenue chez kenzoo</h1>
 
-    <nav>
-      <a href="#accueil">Accueil</a>
-      <a href="#produits">Produits</a>
-      <a href="#">Panier</a>
-    </nav>
-  </header>
+<section class="products" id="produits">
+  <!-- Produits avec data-description et data-stock -->
+  <div class="product" data-name="Fraise Glacée" data-price="15€" data-description="Une saveur fraîche de fraise glacée pour un goût intense." data-stock="12">
+    <img src="https://via.placeholder.com/230x230/ff80ab/ffffff?text=Fraise" alt="Fraise Glacée" />
+    <h3>Fraise Glacée</h3>
+    <p>15€ – 800 bouffées – 20mg</p>
+  </div>
+  <div class="product" data-name="Mangue Givrée" data-price="14€" data-description="Mangue sucrée et fraîchement givrée pour une vape douce." data-stock="8">
+    <img src="https://via.placeholder.com/230x230/ffd180/ffffff?text=Mangue" alt="Mangue Givrée" />
+    <h3>Mangue Givrée</h3>
+    <p>14€ – 800 bouffées – 20mg</p>
+  </div>
+  <div class="product" data-name="Raisin Violet" data-price="13€" data-description="Une saveur de raisin violet, douce et parfumée." data-stock="0">
+    <img src="https://via.placeholder.com/230x230/ce93d8/ffffff?text=Raisin" alt="Raisin Violet" />
+    <h3>Raisin Violet</h3>
+    <p>13€ – 800 bouffées – 20mg</p>
+  </div>
+  <div class="product" data-name="Pastèque Fraîche" data-price="15€" data-description="Goût frais et sucré de pastèque, parfait pour l'été." data-stock="5">
+    <img src="https://via.placeholder.com/230x230/a5d6a7/ffffff?text=Pastèque" alt="Pastèque Fraîche" />
+    <h3>Pastèque Fraîche</h3>
+    <p>15€ – 800 bouffées – 20mg</p>
+  </div>
+  <div class="product" data-name="Myrtille Ice" data-price="16€" data-description="Myrtille fraîche et givrée pour une expérience rafraîchissante." data-stock="10">
+    <img src="https://via.placeholder.com/230x230/90caf9/ffffff?text=Myrtille" alt="Myrtille Ice" />
+    <h3>Myrtille Ice</h3>
+    <p>16€ – 800 bouffées – 20mg</p>
+  </div>
+  <div class="product" data-name="Ananas Twist" data-price="14€" data-description="Une saveur tropicale d’ananas avec une touche acidulée." data-stock="7">
+    <img src="https://via.placeholder.com/230x230/ffe082/ffffff?text=Ananas" alt="Ananas Twist" />
+    <h3>Ananas Twist</h3>
+    <p>14€ – 800 bouffées – 20mg</p>
+  </div>
+</section>
 
-  <h1 id="accueil">Bienvenue chez kenzoo</h1>
+<footer>© 2025 kenzoo — Catalogue fictif.</footer>
 
-  <section class="products" id="produits">
-    <div class="product" data-name="Fraise Glacée">
-      <img src="https://via.placeholder.com/230x230/ff80ab/ffffff?text=Fraise" alt="Fraise Glacée" />
-      <h3>Fraise Glacée</h3>
-      <p>800 bouffées – 20mg</p>
+<!-- Modal -->
+<div class="modal-bg" id="modal-bg" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <span class="modal-close" id="modal-close" role="button" aria-label="Fermer la fenêtre modale">&times;</span>
+    <img id="modal-img" src="" alt="" />
+    <div class="modal-content">
+      <h2 id="modal-title"></h2>
+      <p class="price" id="modal-price"></p>
+      <p id="modal-description"></p>
+      <p class="stock" id="modal-stock"></p>
+      <button id="add-to-cart-btn">Ajouter au panier</button>
     </div>
-    <div class="product" data-name="Mangue Givrée">
-      <img src="https://via.placeholder.com/230x230/ffd180/ffffff?text=Mangue" alt="Mangue Givrée" />
-      <h3>Mangue Givrée</h3>
-      <p>800 bouffées – 20mg</p>
-    </div>
-    <div class="product" data-name="Raisin Violet">
-      <img src="https://via.placeholder.com/230x230/ce93d8/ffffff?text=Raisin" alt="Raisin Violet" />
-      <h3>Raisin Violet</h3>
-      <p>800 bouffées – 20mg</p>
-    </div>
-    <div class="product" data-name="Pastèque Fraîche">
-      <img src="https://via.placeholder.com/230x230/a5d6a7/ffffff?text=Pastèque" alt="Pastèque Fraîche" />
-      <h3>Pastèque Fraîche</h3>
-      <p>800 bouffées – 20mg</p>
-    </div>
-    <div class="product" data-name="Myrtille Ice">
-      <img src="https://via.placeholder.com/230x230/90caf9/ffffff?text=Myrtille" alt="Myrtille Ice" />
-      <h3>Myrtille Ice</h3>
-      <p>800 bouffées – 20mg</p>
-    </div>
-    <div class="product" data-name="Ananas Twist">
-      <img src="https://via.placeholder.com/230x230/ffe082/ffffff?text=Ananas" alt="Ananas Twist" />
-      <h3>Ananas Twist</h3>
-      <p>800 bouffées – 20mg</p>
-    </div>
-  </section>
+  </div>
+</div>
 
-  <footer>© 2025 kenzoo — Catalogue fictif.</footer>
+<script>
+  // Gestion curseur personnalisé (optionnel)
+  const cursor = document.createElement('div');
+  cursor.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 24px; height: 24px;
+    background: radial-gradient(circle, rgba(255,63,139,0.9), transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 9999;
+    box-shadow: 0 0 12px 6px rgba(255,63,139,0.7);
+    animation: pulse 1.2s infinite ease-in-out;
+    mix-blend-mode: screen;
+  `;
+  document.body.appendChild(cursor);
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = (e.clientX - 12) + 'px';
+    cursor.style.top = (e.clientY - 12) + 'px';
+  });
 
-  <div class="cursor" id="cursor"></div>
-  <script>
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = (e.clientX - 12) + 'px';
-      cursor.style.top = (e.clientY - 12) + 'px';
+  // Recherche + suggestions
+  const searchInput = document.getElementById('search');
+  const suggestions = document.getElementById('suggestions');
+  const products = Array.from(document.querySelectorAll('.product'));
+
+  function showProducts(filteredProducts) {
+    products.forEach(p => {
+      p.style.display = filteredProducts.includes(p) ? 'block' : 'none';
     });
+  }
 
-    // Fonction de recherche en temps réel
-    const searchInput = document.getElementById('search');
-    const products = document.querySelectorAll('.product');
+  searchInput.addEventListener('input', () => {
+    const val = searchInput.value.trim().toLowerCase();
+    if (!val) {
+      suggestions.style.display = 'none';
+      showProducts(products);
+      return;
+    }
+    const filtered = products.filter(p => p.dataset.name.toLowerCase().includes(val));
+    if (filtered.length === 0) {
+      suggestions.style.display = 'none';
+      showProducts([]);
+      return;
+    }
+    suggestions.innerHTML = filtered.map(p => 
+      `<div data-name="${p.dataset.name}" data-price="${p.dataset.price}">
+         <span>${p.dataset.name}</span>
+         <span style="color:#ff3f8b; font-weight:700;">${p.dataset.price}</span>
+       </div>`).join('');
+    suggestions.style.display = 'block';
+    showProducts(filtered);
+  });
 
-    searchInput.addEventListener('input', () => {
-      const filter = searchInput.value.toLowerCase();
-      products.forEach(product => {
-        const name = product.getAttribute('data-name').toLowerCase();
-        if (name.includes(filter)) {
-          product.style.display = 'block';
-        } else {
-          product.style.display = 'none';
-        }
-      });
+  suggestions.addEventListener('click', e => {
+    const target = e.target.closest('div');
+    if (!target) return;
+    const name = target.dataset.name;
+    searchInput.value = name;
+    suggestions.style.display = 'none';
+    const selected = products.find(p => p.dataset.name === name);
+    showProducts(selected ? [selected] : []);
+  });
+
+  // Modal gestion
+  const modalBg = document.getElementById('modal-bg');
+  const modalClose = document.getElementById('modal-close');
+  const modalImg = document.getElementById('modal-img');
+  const modalTitle = document.getElementById('modal-title');
+  const modalPrice = document.getElementById('modal-price');
+  const modalDesc = document.getElementById('modal-description');
+  const modalStock = document.getElementById('modal-stock');
+  const addToCartBtn = document.getElementById('add-to-cart-btn');
+
+  products.forEach(product => {
+    product.addEventListener('click', () => {
+      // Remplir modal avec infos du produit cliqué
+      modalImg.src = product.querySelector('img').src;
+      modalImg.alt = product.dataset.name;
+      modalTitle.textContent = product.dataset.name;
+      modalPrice.textContent = product.dataset.price;
+      modalDesc.textContent = product.dataset.description || 'Description non disponible.';
+      const stock = parseInt(product.dataset.stock, 10);
+      modalStock.textContent = stock > 0 ? `Stock disponible : ${stock}` : "Rupture de stock";
+      addToCartBtn.disabled = stock <= 0;
+      addToCartBtn.textContent = stock > 0 ? "Ajouter au panier" : "Indisponible";
+      modalBg.classList.add('active');
+      modalBg.setAttribute('aria-hidden', 'false');
     });
-  </script>
+  });
+
+  modalClose.addEventListener('click', () => {
+    modalBg.classList.remove('active');
+    modalBg.setAttribute('aria-hidden', 'true');
+  });
+
+  modalBg.addEventListener('click', e => {
+    if (e.target === modalBg) {
+      modalBg.classList.remove('active');
+      modalBg.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  addToCartBtn.addEventListener('click', () => {
+    alert(`${modalTitle.textContent} ajouté au panier !`);
+    modalBg.classList.remove('active');
+    modalBg.setAttribute('aria-hidden', 'true');
+  });
+</script>
+
 </body>
 </html>
