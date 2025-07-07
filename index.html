@@ -2,371 +2,120 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Puff Zombies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Header avec Recherche</title>
   <style>
-    /* Reset et base */
     * {
       box-sizing: border-box;
-    }
-    body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #fff;
-      color: #222;
+      padding: 0;
     }
 
-    /* HEADER */
+    body {
+      font-family: Arial, sans-serif;
+    }
+
     header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 0;
-      background: white;
-      z-index: 100;
-    }
-    .header-left, .header-center, .header-right {
-      display: flex;
       align-items: center;
-    }
-    .header-left img {
-      height: 40px;
-      cursor: pointer;
-    }
-    .header-center {
-      flex-grow: 1;
-      justify-content: center;
-    }
-    .header-center h1 {
-      font-weight: 700;
-      font-size: 1.5rem;
-      margin: 0;
-      user-select: none;
-      cursor: default;
-      letter-spacing: 2px;
-      color: #111;
-    }
-    .header-right input[type="search"] {
-      padding: 8px 12px;
-      border-radius: 20px;
-      border: 1.5px solid #ccc;
-      width: 180px;
-      transition: border-color 0.3s ease;
-      font-size: 0.9rem;
-      outline-offset: 2px;
-    }
-    .header-right input[type="search"]:focus {
-      border-color: #000;
-    }
-    .header-right button.cart-btn {
-      margin-left: 15px;
-      background: #111;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .header-right button.cart-btn:hover {
-      background-color: #444;
-    }
-    .cart-icon {
-      width: 20px;
-      height: 20px;
-      fill: white;
+      background-color: #ffffff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    /* MAIN GRID PRODUITS */
-    main {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-    .product-card {
-      border: 1px solid #ddd;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      background: #fafafa;
-    }
-    .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
-    }
-    .product-img {
-      width: 100%;
-      height: 180px;
-      object-fit: contain;
-      background: white;
-      padding: 20px;
-    }
-    .product-info {
-      flex-grow: 1;
-      padding: 1rem 1.2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .product-title {
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: #222;
-      user-select: none;
-    }
-    .btn-flavors {
-      padding: 10px 15px;
-      border: none;
-      background: #111;
-      color: white;
-      border-radius: 25px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 1rem;
-      width: 100%;
-      user-select: none;
-    }
-    .btn-flavors:hover {
-      background-color: #444;
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
     }
 
-    /* MODAL FLAVORS */
-    .modal-bg {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 150;
-    }
-    .modal-bg.active {
+    .header-right {
       display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .modal-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 15px;
-      max-width: 400px;
-      width: 90%;
-      box-shadow: 0 12px 24px rgb(0 0 0 / 0.25);
-      text-align: center;
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .icon-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .search-form {
       position: relative;
-    }
-    .modal-content h2 {
-      margin-top: 0;
-      font-weight: 700;
-      color: #111;
-    }
-    .modal-content ul {
-      list-style: none;
-      padding: 0;
-      margin: 1rem 0 0 0;
-    }
-    .modal-content ul li {
-      margin: 10px 0;
-      font-size: 1rem;
-      cursor: pointer;
-      padding: 8px 12px;
-      border-radius: 10px;
-      background: #f1f1f1;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
-    .modal-content ul li:hover {
-      background-color: #ddd;
-    }
-    .modal-close {
-      position: absolute;
-      top: 12px;
-      right: 15px;
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: #666;
-      user-select: none;
-      transition: color 0.3s ease;
-    }
-    .modal-close:hover {
-      color: #000;
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
     }
 
-    /* FOOTER minimal */
-    footer {
-      text-align: center;
-      padding: 1rem 0;
-      font-size: 0.9rem;
-      color: #888;
-      user-select: none;
+    .search-form input {
+      padding: 0.4rem 0.8rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      width: 200px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .search-form.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
-<body onload="playVapeSound()">
-
-  <!-- Son vape -->
-  <audio id="vape-sound" preload="auto">
-    <source src="https://cdn.pixabay.com/audio/2022/07/30/audio_f8e682bb50.mp3" type="audio/mpeg" />
-    Ton navigateur ne supporte pas l'audio.
-  </audio>
+<body>
 
   <header>
-    <div class="header-left">
-      <img src="https://i.imgur.com/9OQW5Fg.png" alt="Puff Zombies Logo" />
-    </div>
-    <div class="header-center">
-      <h1>Puff Zombies</h1>
-    </div>
+    <div class="logo">Ma Boutique</div>
     <div class="header-right">
-      <input type="search" placeholder="Rechercher..." id="searchInput" />
-      <button class="cart-btn" id="cartBtn" aria-label="Voir panier">
-        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 6H4V4H6V6ZM20 6H8V4H20V6ZM6 8H20L18 20H8L6 8Z" fill="currentColor"/>
-          <circle cx="9" cy="22" r="2" fill="currentColor"/>
-          <circle cx="17" cy="22" r="2" fill="currentColor"/>
-        </svg>
-        Panier
+      <form class="search-form" id="searchForm">
+        <input type="text" id="searchInput" placeholder="Rechercher..." />
+      </form>
+
+      <button class="icon-btn" aria-label="User">
+        <img src="https://www.svgrepo.com/show/384674/user.svg" alt="Icône utilisateur" />
+      </button>
+      <button class="icon-btn" aria-label="Search" id="searchToggle">
+        <img src="https://www.svgrepo.com/show/488200/search.svg" alt="Icône recherche" />
+      </button>
+      <button class="icon-btn" aria-label="Cart">
+        <img src="https://www.svgrepo.com/show/506761/shopping-bag.svg" alt="Icône panier" />
       </button>
     </div>
   </header>
 
-  <main>
-    <div class="product-grid" id="productGrid">
-      <!-- Produits ajoutés en JS -->
-    </div>
-  </main>
-
-  <!-- Modal goûts -->
-  <div class="modal-bg" id="modal">
-    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <span class="modal-close" id="modalClose" aria-label="Fermer modal">&times;</span>
-      <h2 id="modalTitle">Choisissez un goût</h2>
-      <ul id="flavorList"></ul>
-    </div>
-  </div>
-
-  <footer>
-    &copy; 2025 Puff Zombies. Tous droits réservés.
-  </footer>
-
   <script>
-    // Produits et goûts
-    const products = {
-      "10K": {
-        img: "https://i.imgur.com/9OQW5Fg.png",
-        flavors: ["Menthe Fraîche", "Mangue", "Pastèque", "Cerisier", "Cola"]
-      },
-      "15K": {
-        img: "https://i.imgur.com/bdL6FhX.png",
-        flavors: ["Fraise", "Banane", "Melon", "Citron Vert", "Cerise"]
-      },
-      "22K": {
-        img: "https://i.imgur.com/IBZMeJc.png",
-        flavors: ["Ananas", "Pêche", "Raisin", "Framboise", "Coco"]
-      },
-      "45K": {
-        img: "https://i.imgur.com/uqZglph.png",
-        flavors: ["Litchi", "Pomme Verte", "Noix de Coco", "Citron", "Orange"]
-      }
-    };
-
-    // Génération produits dans le DOM
-    const productGrid = document.getElementById("productGrid");
-    Object.entries(products).forEach(([key, data]) => {
-      const card = document.createElement("div");
-      card.className = "product-card";
-
-      card.innerHTML = `
-        <img src="${data.img}" alt="Puff ${key}" class="product-img" />
-        <div class="product-info">
-          <h3 class="product-title">${key}</h3>
-          <button class="btn-flavors" aria-label="Voir les goûts pour ${key}">Voir les goûts</button>
-        </div>
-      `;
-
-      const btn = card.querySelector(".btn-flavors");
-      btn.addEventListener("click", () => openModal(key));
-      productGrid.appendChild(card);
-    });
-
-    // Modal contrôle
-    const modal = document.getElementById("modal");
-    const modalClose = document.getElementById("modalClose");
-    const flavorList = document.getElementById("flavorList");
-    const modalTitle = document.getElementById("modalTitle");
-
-    function openModal(productKey) {
-      modalTitle.textContent = `Choisissez un goût pour Puff ${productKey}`;
-      flavorList.innerHTML = "";
-      products[productKey].flavors.forEach(flavor => {
-        const li = document.createElement("li");
-        li.textContent = flavor;
-        li.tabIndex = 0;
-        li.addEventListener("click", () => {
-          modal.style.display = "none";
-          alert(`Vous avez choisi "${flavor}" pour Puff ${productKey}.\n\nContactez-nous sur WhatsApp pour commander au 0644942208.`);
-          // Ici tu pourrais ajouter dans le panier par exemple.
-        });
-        li.addEventListener("keypress", (e) => {
-          if (e.key === 'Enter') li.click();
-        });
-        flavorList.appendChild(li);
-      });
-      modal.classList.add("active");
-    }
-
-    modalClose.onclick = () => {
-      modal.classList.remove("active");
-    };
-
-    window.onclick = (e) => {
-      if (e.target === modal) {
-        modal.classList.remove("active");
-      }
-    };
-
-    // Son vape au chargement
-    function playVapeSound() {
-      const sound = document.getElementById("vape-sound");
-      sound.volume = 0.3;
-      sound.play().catch(() => {
-        // Autoplay bloqué parfois par navigateur, rien à faire
-      });
-    }
-
-    // Recherche simple (filtre les cartes)
+    const searchToggle = document.getElementById("searchToggle");
+    const searchForm = document.getElementById("searchForm");
     const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener("input", () => {
-      const val = searchInput.value.toLowerCase();
-      const cards = productGrid.querySelectorAll(".product-card");
-      cards.forEach(card => {
-        const title = card.querySelector(".product-title").textContent.toLowerCase();
-        card.style.display = title.includes(val) ? "" : "none";
-      });
+
+    searchToggle.addEventListener("click", () => {
+      searchForm.classList.toggle("show");
+      if (searchForm.classList.contains("show")) {
+        searchInput.focus();
+      }
     });
 
-    // Panier simple (popup)
-    const cartBtn = document.getElementById("cartBtn");
-    cartBtn.addEventListener("click", () => {
-      alert("Fonction panier à implémenter.\n\nPour commander, contactez-nous sur WhatsApp : 0644942208");
+    searchForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const query = searchInput.value.trim();
+      if (query) {
+        alert("Recherche : " + query);
+        // Tu peux ici rediriger vers une page ou faire un filtrage JS
+      }
     });
   </script>
+
 </body>
 </html>
