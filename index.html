@@ -2,111 +2,371 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Puff Zombies</title>
   <style>
+    /* Reset et base */
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      font-family: 'Helvetica Neue', sans-serif;
-      background: white;
-      color: #111;
+      font-family: 'Arial', sans-serif;
+      background: #fff;
+      color: #222;
     }
+
+    /* HEADER */
     header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       padding: 1rem 2rem;
       border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 100;
     }
-    .logo {
-      height: 40px;
-    }
-    .title {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    .header-right {
+    .header-left, .header-center, .header-right {
       display: flex;
       align-items: center;
-      gap: 1rem;
     }
-    .search {
-      padding: 6px 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .cart-btn {
-      background: #000;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
+    .header-left img {
+      height: 40px;
       cursor: pointer;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 2rem;
+    .header-center {
+      flex-grow: 1;
+      justify-content: center;
     }
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
+    .header-center h1 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin: 0;
+      user-select: none;
+      cursor: default;
+      letter-spacing: 2px;
+      color: #111;
     }
-    .card img {
-      max-width: 100px;
-    }
-    .btn {
-      margin-top: 10px;
+    .header-right input[type="search"] {
       padding: 8px 12px;
-      background: #000;
+      border-radius: 20px;
+      border: 1.5px solid #ccc;
+      width: 180px;
+      transition: border-color 0.3s ease;
+      font-size: 0.9rem;
+      outline-offset: 2px;
+    }
+    .header-right input[type="search"]:focus {
+      border-color: #000;
+    }
+    .header-right button.cart-btn {
+      margin-left: 15px;
+      background: #111;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 20px;
+      padding: 10px 18px;
+      font-weight: 600;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-right button.cart-btn:hover {
+      background-color: #444;
+    }
+    .cart-icon {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    /* MAIN GRID PRODUITS */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .product-card {
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      background: #fafafa;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
+    }
+    .product-img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      background: white;
+      padding: 20px;
+    }
+    .product-info {
+      flex-grow: 1;
+      padding: 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #222;
+      user-select: none;
+    }
+    .btn-flavors {
+      padding: 10px 15px;
+      border: none;
+      background: #111;
+      color: white;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+      width: 100%;
+      user-select: none;
+    }
+    .btn-flavors:hover {
+      background-color: #444;
+    }
+
+    /* MODAL FLAVORS */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+    }
+    .modal-bg.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 12px 24px rgb(0 0 0 / 0.25);
+      text-align: center;
+      position: relative;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #111;
+    }
+    .modal-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0 0;
+    }
+    .modal-content ul li {
+      margin: 10px 0;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: #f1f1f1;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .modal-content ul li:hover {
+      background-color: #ddd;
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #666;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+      color: #000;
+    }
+
+    /* FOOTER minimal */
+    footer {
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+      color: #888;
+      user-select: none;
     }
   </style>
 </head>
-<body>
+<body onload="playVapeSound()">
+
+  <!-- Son vape -->
+  <audio id="vape-sound" preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2022/07/30/audio_f8e682bb50.mp3" type="audio/mpeg" />
+    Ton navigateur ne supporte pas l'audio.
+  </audio>
+
   <header>
-    <img src="https://i.imgur.com/9OQW5Fg.png" alt="Logo" class="logo" />
-    <div class="title">Puff Zombies</div>
+    <div class="header-left">
+      <img src="https://i.imgur.com/9OQW5Fg.png" alt="Puff Zombies Logo" />
+    </div>
+    <div class="header-center">
+      <h1>Puff Zombies</h1>
+    </div>
     <div class="header-right">
-      <input type="text" placeholder="Rechercher..." class="search" />
-      <button class="cart-btn">Panier</button>
+      <input type="search" placeholder="Rechercher..." id="searchInput" />
+      <button class="cart-btn" id="cartBtn" aria-label="Voir panier">
+        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 6H4V4H6V6ZM20 6H8V4H20V6ZM6 8H20L18 20H8L6 8Z" fill="currentColor"/>
+          <circle cx="9" cy="22" r="2" fill="currentColor"/>
+          <circle cx="17" cy="22" r="2" fill="currentColor"/>
+        </svg>
+        Panier
+      </button>
     </div>
   </header>
 
-  <main class="grid">
-    <div class="card">
-      <img src="https://i.imgur.com/9OQW5Fg.png" alt="Puff 10K" />
-      <h3>10K</h3>
-      <button class="btn" onclick="selectFlavor('10K')">Voir les goûts</button>
-    </div>
-    <div class="card">
-      <img src="https://i.imgur.com/bdL6FhX.png" alt="Puff 15K" />
-      <h3>15K</h3>
-      <button class="btn" onclick="selectFlavor('15K')">Voir les goûts</button>
-    </div>
-    <div class="card">
-      <img src="https://i.imgur.com/IBZMeJc.png" alt="Puff 22K" />
-      <h3>22K</h3>
-      <button class="btn" onclick="selectFlavor('22K')">Voir les goûts</button>
-    </div>
-    <div class="card">
-      <img src="https://i.imgur.com/uqZglph.png" alt="Puff 45K" />
-      <h3>45K</h3>
-      <button class="btn" onclick="selectFlavor('45K')">Voir les goûts</button>
+  <main>
+    <div class="product-grid" id="productGrid">
+      <!-- Produits ajoutés en JS -->
     </div>
   </main>
 
+  <!-- Modal goûts -->
+  <div class="modal-bg" id="modal">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <span class="modal-close" id="modalClose" aria-label="Fermer modal">&times;</span>
+      <h2 id="modalTitle">Choisissez un goût</h2>
+      <ul id="flavorList"></ul>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Puff Zombies. Tous droits réservés.
+  </footer>
+
   <script>
-    function selectFlavor(capacity) {
-      alert("Affichage des goûts pour les Puffs " + capacity);
-      // Ici tu peux créer une page modale ou rediriger vers une autre page avec les goûts disponibles.
+    // Produits et goûts
+    const products = {
+      "10K": {
+        img: "https://i.imgur.com/9OQW5Fg.png",
+        flavors: ["Menthe Fraîche", "Mangue", "Pastèque", "Cerisier", "Cola"]
+      },
+      "15K": {
+        img: "https://i.imgur.com/bdL6FhX.png",
+        flavors: ["Fraise", "Banane", "Melon", "Citron Vert", "Cerise"]
+      },
+      "22K": {
+        img: "https://i.imgur.com/IBZMeJc.png",
+        flavors: ["Ananas", "Pêche", "Raisin", "Framboise", "Coco"]
+      },
+      "45K": {
+        img: "https://i.imgur.com/uqZglph.png",
+        flavors: ["Litchi", "Pomme Verte", "Noix de Coco", "Citron", "Orange"]
+      }
+    };
+
+    // Génération produits dans le DOM
+    const productGrid = document.getElementById("productGrid");
+    Object.entries(products).forEach(([key, data]) => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+
+      card.innerHTML = `
+        <img src="${data.img}" alt="Puff ${key}" class="product-img" />
+        <div class="product-info">
+          <h3 class="product-title">${key}</h3>
+          <button class="btn-flavors" aria-label="Voir les goûts pour ${key}">Voir les goûts</button>
+        </div>
+      `;
+
+      const btn = card.querySelector(".btn-flavors");
+      btn.addEventListener("click", () => openModal(key));
+      productGrid.appendChild(card);
+    });
+
+    // Modal contrôle
+    const modal = document.getElementById("modal");
+    const modalClose = document.getElementById("modalClose");
+    const flavorList = document.getElementById("flavorList");
+    const modalTitle = document.getElementById("modalTitle");
+
+    function openModal(productKey) {
+      modalTitle.textContent = `Choisissez un goût pour Puff ${productKey}`;
+      flavorList.innerHTML = "";
+      products[productKey].flavors.forEach(flavor => {
+        const li = document.createElement("li");
+        li.textContent = flavor;
+        li.tabIndex = 0;
+        li.addEventListener("click", () => {
+          modal.style.display = "none";
+          alert(`Vous avez choisi "${flavor}" pour Puff ${productKey}.\n\nContactez-nous sur WhatsApp pour commander au 0644942208.`);
+          // Ici tu pourrais ajouter dans le panier par exemple.
+        });
+        li.addEventListener("keypress", (e) => {
+          if (e.key === 'Enter') li.click();
+        });
+        flavorList.appendChild(li);
+      });
+      modal.classList.add("active");
     }
+
+    modalClose.onclick = () => {
+      modal.classList.remove("active");
+    };
+
+    window.onclick = (e) => {
+      if (e.target === modal) {
+        modal.classList.remove("active");
+      }
+    };
+
+    // Son vape au chargement
+    function playVapeSound() {
+      const sound = document.getElementById("vape-sound");
+      sound.volume = 0.3;
+      sound.play().catch(() => {
+        // Autoplay bloqué parfois par navigateur, rien à faire
+      });
+    }
+
+    // Recherche simple (filtre les cartes)
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", () => {
+      const val = searchInput.value.toLowerCase();
+      const cards = productGrid.querySelectorAll(".product-card");
+      cards.forEach(card => {
+        const title = card.querySelector(".product-title").textContent.toLowerCase();
+        card.style.display = title.includes(val) ? "" : "none";
+      });
+    });
+
+    // Panier simple (popup)
+    const cartBtn = document.getElementById("cartBtn");
+    cartBtn.addEventListener("click", () => {
+      alert("Fonction panier à implémenter.\n\nPour commander, contactez-nous sur WhatsApp : 0644942208");
+    });
   </script>
 </body>
 </html>
