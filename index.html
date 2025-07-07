@@ -2,57 +2,73 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kenzoo™ – Vapes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>kenzoo – Accueil</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(145deg, #ff80ab, #ffd180);
-      color: #333;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      color: #000;
+      background: #000;
+      overflow-x: hidden;
+      cursor: none;
+      position: relative;
     }
 
     header {
-      background-color: white;
+      position: relative;
+      z-index: 10;
+      background-color: rgba(255 255 255 / 0.95);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
 
     .logo {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ff4081;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #000;
+      user-select: none;
+      transition: transform 0.3s ease;
     }
-
-    .nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: #555;
-      font-weight: bold;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 5rem 2rem;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    .hero button {
-      background-color: #ff4081;
-      color: white;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 25px;
-      font-size: 1rem;
+    .logo:hover {
+      transform: scale(1.25);
+      color: #ff3f8b;
+      text-shadow: 0 0 10px #ff3f8b;
       cursor: pointer;
+    }
+
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #000;
+      font-weight: 900;
+      font-size: 1.1rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+      user-select: none;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #ff3f8b;
+      transform: scale(1.15);
+      text-shadow: 0 0 8px #ff3f8b;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 4rem 2rem 2rem;
+      color: #000;
+      font-weight: 900;
+      text-shadow: 0 0 10px #ff3f8b;
+      user-select: none;
+      position: relative;
+      z-index: 10;
     }
 
     footer {
@@ -61,28 +77,59 @@
       background: #fff3f6;
       font-size: 0.9rem;
       color: #666;
+      position: relative;
+      z-index: 10;
+      user-select: none;
+    }
+
+    /* Curseur personnalisé */
+    .cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 24px; height: 24px;
+      background: radial-gradient(circle, rgba(255,63,139,0.9), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 0 12px 6px rgba(255,63,139,0.7);
+      animation: pulse 1.2s infinite ease-in-out;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">KENZOO™</div>
-    <nav class="nav">
+    <div class="logo">kenzoo</div>
+    <nav>
       <a href="index.html">Accueil</a>
       <a href="produits.html">Produits</a>
-      <a href="#">Contact</a>
+      <a href="#">Panier</a>
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Découvre les nouvelles puffs Kenzoo™</h1>
-    <a href="produits.html"><button>Voir les saveurs</button></a>
-  </section>
+  <h1>Bienvenue chez kenzoo</h1>
 
-  <footer>
-    © 2025 Kenzoo™ — Ce site est fictif à but éducatif.
-  </footer>
+  <footer>© 2025 kenzoo — Catalogue fictif.</footer>
 
+  <div class="cursor" id="cursor"></div>
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = (e.clientX - 12) + 'px';
+      cursor.style.top = (e.clientY - 12) + 'px';
+    });
+  </script>
 </body>
 </html>
