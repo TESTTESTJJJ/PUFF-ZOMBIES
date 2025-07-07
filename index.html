@@ -3,105 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Header avec Recherche</title>
+  <title>Kenzoo™ – Vapes</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #ffffff;
-      padding: 10px 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(145deg, #ff80ab, #ffd180);
       color: #333;
     }
 
-    .header-right {
+    header {
+      background-color: white;
+      padding: 1rem 2rem;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    .icon-btn {
-      background: none;
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff4081;
+    }
+
+    .nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #555;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .hero button {
+      background-color: #ff4081;
+      color: white;
+      padding: 1rem 2rem;
       border: none;
-      cursor: pointer;
-      padding: 5px;
-    }
-
-    .icon-btn img {
-      width: 24px;
-      height: 24px;
-    }
-
-    .search-form {
-      position: relative;
-      display: none;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .search-form input {
-      padding: 0.4rem 0.8rem;
+      border-radius: 25px;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      outline: none;
-      width: 200px;
-      transition: all 0.3s ease-in-out;
+      cursor: pointer;
     }
 
-    .search-form.show {
-      display: block;
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 2rem;
+      gap: 2rem;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .product {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem;
+      width: 220px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product h3 {
+      color: #ff4081;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #fff3f6;
+      font-size: 0.9rem;
+      color: #666;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">Ma Boutique</div>
-
-    <div class="header-right">
-      <button class="icon-btn" id="searchToggle" title="Recherche">
-        🔍
-      </button>
-      <form id="searchForm" class="search-form" role="search">
-        <input type="text" placeholder="Rechercher..." />
-      </form>
-    </div>
+    <div class="logo">KENZOO™</div>
+    <nav class="nav">
+      <a href="#">Accueil</a>
+      <a href="#">Produits</a>
+      <a href="#">Contact</a>
+    </nav>
   </header>
 
-  <script>
-    const searchToggle = document.getElementById("searchToggle");
-    const searchForm = document.getElementById("searchForm");
+  <section class="hero">
+    <h1>Découvre les nouvelles puffs Kenzoo™</h1>
+    <button>Voir les saveurs</button>
+  </section>
 
-    searchToggle.addEventListener("click", () => {
-      searchForm.classList.toggle("show");
-      const input = searchForm.querySelector("input");
-      if (searchForm.classList.contains("show")) {
-        input.focus();
-      } else {
-        input.blur();
-      }
-    });
-  </script>
+  <section class="products">
+    <div class="product">
+      <img src="https://via.placeholder.com/200x200/ff80ab/ffffff?text=Fraise" alt="Fraise">
+      <h3>Fraise Glacée</h3>
+      <p>800 bouffées – 20mg</p>
+    </div>
+    <div class="product">
+      <img src="https://via.placeholder.com/200x200/ffd180/ffffff?text=Mangue" alt="Mangue">
+      <h3>Mangue Givrée</h3>
+      <p>800 bouffées – 20mg</p>
+    </div>
+    <div class="product">
+      <img src="https://via.placeholder.com/200x200/ce93d8/ffffff?text=Raisin" alt="Raisin">
+      <h3>Raisin Violet</h3>
+      <p>800 bouffées – 20mg</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Kenzoo™ — Ce site est fictif et ne vend aucun produit.  
+  </footer>
+
 </body>
 </html>
