@@ -1,520 +1,97 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kenzoo - Boutique Vape</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin:0; padding:0;
-    background: #000;
-    color:#000;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    overflow-x: hidden;
-    user-select:none;
-  }
-  header {
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    background: #fff;
-    padding: 1rem 2rem;
-    position: sticky;
-    top:0;
-    z-index: 100;
-  }
-  #logo {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: #000;
-    cursor:pointer;
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
-  }
-  #logo:hover {
-    transform: scale(1.3);
-    text-shadow: 2px 2px 6px #ff3f8b;
-  }
-  nav {
-    display:flex;
-    gap: 1.5rem;
-  }
-  nav a {
-    color: #000;
-    font-weight: 700;
-    text-decoration:none;
-    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
-    position: relative;
-  }
-  nav a:hover {
-    transform: scale(1.1) rotate(5deg);
-    color: #ff3f8b;
-    text-shadow: 2px 2px 5px #ff3f8b;
-  }
-  nav a:focus {
-    outline: 2px solid #ff3f8b;
-  }
-  #search-container {
-    flex-grow: 1;
-    margin: 0 2rem;
-    position: relative;
-  }
-  #search {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 20px;
-    border: 2px solid #ff3f8b;
-    outline:none;
-  }
-  #search:focus {
-    border-color: #ff3f8b;
-    box-shadow: 0 0 8px #ff3f8b;
-  }
-  #search-results {
-    position: absolute;
-    background: #fff;
-    top: 110%;
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    border-radius: 0 0 10px 10px;
-    border: 2px solid #ff3f8b;
-    border-top: none;
-    display:none;
-    z-index: 101;
-  }
-  #search-results div {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-weight: 700;
-    color:#000;
-    display:flex;
-    justify-content: space-between;
-  }
-  #search-results div:hover {
-    background: #ff3f8b;
-    color:#fff;
-  }
-
-  /* Boutons catégories */
-  .categories {
-    text-align:center;
-    margin: 2rem 0 1rem 0;
-  }
-  .categories button {
-    font-weight: 700;
-    margin: 0 12px;
-    padding: 0.6rem 1.3rem;
-    border-radius: 12px;
-    border: 2px solid #ff3f8b;
-    background: #fff;
-    color:#000;
-    cursor:pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  .categories button.active,
-  .categories button:hover {
-    background: #ff3f8b;
-    color: #fff;
-    box-shadow: 0 0 8px #ff3f8b;
-  }
-
-  /* Produits */
-  #produits {
-    max-width: 1100px;
-    margin: 0 auto 5rem auto;
-    display: flex;
-    justify-content: center;
-    gap: 1.8rem;
-    flex-wrap: wrap;
-    padding: 0 1rem;
-  }
-  .product {
-    background: #fff;
-    border-radius: 12px;
-    padding: 1rem;
-    width: 230px;
-    cursor: pointer;
-    font-weight: 700;
-    color: #000;
-    box-shadow: 0 0 10px #0002;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    user-select:none;
-  }
-  .product:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #ff3f8b;
-  }
-  .product img {
-    width: 100%;
-    border-radius: 12px;
-    margin-bottom: 0.7rem;
-  }
-  .product h3 {
-    margin: 0.3rem 0;
-  }
-
-  /* Modal */
-  #modal-bg {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.75);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 200;
-  }
-  #modal-bg.active {
-    display:flex;
-  }
-  #modal {
-    background: #fff;
-    border-radius: 16px;
-    max-width: 900px;
-    width: 90%;
-    padding: 2rem;
-    display: flex;
-    gap: 2rem;
-    color: #000;
-    user-select:none;
-    flex-wrap: wrap;
-  }
-  #modal img {
-    max-width: 350px;
-    border-radius: 16px;
-    flex-shrink: 0;
-  }
-  #modal-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  #modal h2 {
-    margin: 0 0 1rem 0;
-  }
-  #modal p {
-    margin: 0.5rem 0;
-    font-weight: 700;
-  }
-  #modal-stock {
-    font-weight: 700;
-    margin-top: 1rem;
-  }
-  #add-to-cart-btn {
-    margin-top: 1.5rem;
-    padding: 0.7rem 1.5rem;
-    font-weight: 700;
-    background: #ff3f8b;
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  #add-to-cart-btn:disabled {
-    background: #999;
-    cursor: not-allowed;
-  }
-  #add-to-cart-btn:hover:not(:disabled) {
-    background: #e0337a;
-  }
-  #modal-close {
-    position: absolute;
-    top: 12px;
-    right: 20px;
-    font-size: 2rem;
-    color: #fff;
-    cursor: pointer;
-    font-weight: 900;
-    user-select:none;
-  }
-
-  /* Fond fumée miroir */
-  body::before, body::after {
-    content: '';
-    position: fixed;
-    top:0; bottom:0;
-    width: 40vw;
-    pointer-events: none;
-    background: url('https://i.ibb.co/xq9n9f9/smoke.png') repeat-y center/contain;
-    opacity: 0.15;
-    animation: smokeAnim 30s linear infinite;
-    z-index: 0;
-  }
-  body::before {
-    left:0;
-    transform: scaleX(1);
-  }
-  body::after {
-    right:0;
-    transform: scaleX(-1);
-  }
-  @keyframes smokeAnim {
-    0% { background-position-y: 0; }
-    100% { background-position-y: 1000px; }
-  }
-
-  /* Curseur paillette fumée (simple version) */
-  #custom-cursor {
-    position: fixed;
-    pointer-events:none;
-    top:0; left:0;
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ff3f8b 40%, transparent 60%);
-    filter: drop-shadow(0 0 6px #ff3f8b);
-    mix-blend-mode: screen;
-    transition: transform 0.1s ease;
-    z-index: 9999;
-  }
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenzozo</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/script.js"></script>
 </head>
 <body>
+  <header>
+    <div class="logo">Kenzozo</div>
+    <nav>
+      <ul>
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#">Produits</a></li>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="cta" href="#">Acheter</a>
+  </header>
 
-<header>
-  <div id="logo" tabindex="0" aria-label="Logo Kenzoo">Kenzoo</div>
-  <nav>
-    <a href="#" id="accueil-link">Accueil</a>
-    <a href="#" id="produits-link">Produits</a>
-    <a href="#" id="panier-link">Panier</a>
-  </nav>
-  <div id="search-container">
-    <input type="search" id="search" aria-label="Recherche produits" placeholder="Rechercher un produit..." autocomplete="off" />
-    <div id="search-results" role="listbox" aria-label="Résultats de la recherche"></div>
-  </div>
-</header>
-
-<div class="categories" role="tablist" aria-label="Catégories produits">
-  <button class="cat-btn" data-cat="puffs" role="tab" aria-selected="true">Puffs</button>
-  <button class="cat-btn" data-cat="cigarettes" role="tab" aria-selected="false">Cigarettes électroniques</button>
-  <button class="cat-btn" data-cat="gouts" role="tab" aria-selected="false">Goûts</button>
-</div>
-
-<section id="produits" aria-live="polite" aria-label="Liste des produits">
-  <!-- Produits affichés ici -->
-</section>
-
-<!-- Modal produit -->
-<div id="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description">
-  <div id="modal">
-    <span id="modal-close" role="button" tabindex="0" aria-label="Fermer la fenêtre">&times;</span>
-    <img id="modal-img" src="" alt="" />
-    <div id="modal-content">
-      <h2 id="modal-title"></h2>
-      <p id="modal-price"></p>
-      <p id="modal-description"></p>
-      <p id="modal-stock"></p>
-      <button id="add-to-cart-btn">Ajouter au panier</button>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bienvenue chez Kenzozo</h1>
+      <p>Découvrez nos produits exclusifs avec style et simplicité.</p>
+      <a href="#" class="btn">Voir les produits</a>
     </div>
-  </div>
-</div>
+  </section>
 
-<div id="custom-cursor"></div>
+  <section class="produits">
+    <h2>Nos Produits</h2>
+    <div class="grid-produits">
+      <div class="produit">
+        <img src="images/produit1.jpg" alt="Produit 1" />
+        <h3>Produit 1</h3>
+        <p>Une description rapide.</p>
+        <span>19,90€</span>
+        <button>Ajouter au panier</button>
+      </div>
+      <div class="produit">
+        <img src="images/produit2.jpg" alt="Produit 2" />
+        <h3>Produit 2</h3>
+        <p>Une description rapide.</p>
+        <span>24,90€</span>
+        <button>Ajouter au panier</button>
+      </div>
+      <div class="produit">
+        <img src="images/produit3.jpg" alt="Produit 3" />
+        <h3>Produit 3</h3>
+        <p>Une description rapide.</p>
+        <span>29,90€</span>
+        <button>Ajouter au panier</button>
+      </div>
+    </div>
+  </section>
 
-<script>
-  // Produits
-  const allProducts = {
-    puffs: [
-      {name:"Fraise Glacée", price:"15€", desc:"Saveur fraise glacée.", stock:12, img:"https://via.placeholder.com/230x230/ff80ab/ffffff?text=Fraise"},
-      {name:"Mangue Givrée", price:"14€", desc:"Mangue sucrée et fraîche.", stock:8, img:"https://via.placeholder.com/230x230/ffd180/ffffff?text=Mangue"},
-      {name:"Pastèque Fraîche", price:"15€", desc:"Goût frais de pastèque.", stock:5, img:"https://via.placeholder.com/230x230/a5d6a7/ffffff?text=Pastèque"}
-    ],
-    cigarettes: [
-      {name:"Cigarette X100", price:"45€", desc:"Cigarette électronique avancée.", stock:10, img:"https://via.placeholder.com/230x230/90caf9/ffffff?text=Cigarette"},
-      {name:"Cigarette Z200", price:"50€", desc:"Haute performance.", stock:6, img:"https://via.placeholder.com/230x230/ce93d8/ffffff?text=Cigarette"},
-      {name:"Cigarette M50", price:"40€", desc:"Compacte et efficace.", stock:7, img:"https://via.placeholder.com/230x230/ffd180/ffffff?text=Cigarette"}
-    ],
-    gouts: [
-      {name:"Menthe Fraîche", price:"12€", desc:"Goût menthe ultra frais.", stock:20, img:"https://via.placeholder.com/230x230/80deea/ffffff?text=Menthe"},
-      {name:"Vanille Douce", price:"13€", desc:"Arôme vanille douce.", stock:15, img:"https://via.placeholder.com/230x230/ffcc80/ffffff?text=Vanille"},
-      {name:"Cerise Rouge", price:"14€", desc:"Saveur cerise intense.", stock:9, img:"https://via.placeholder.com/230x230/f48fb1/ffffff?text=Cerise"}
-    ]
-  };
+  <section class="avantages">
+    <h2>Pourquoi choisir Kenzozo ?</h2>
+    <div class="avantage-list">
+      <div class="avantage">
+        <h3>Livraison rapide</h3>
+        <p>Expédié en 24h partout en France.</p>
+      </div>
+      <div class="avantage">
+        <h3>Qualité premium</h3>
+        <p>Matériaux de qualité et design moderne.</p>
+      </div>
+      <div class="avantage">
+        <h3>Satisfait ou remboursé</h3>
+        <p>Retour sous 14 jours.</p>
+      </div>
+    </div>
+  </section>
 
-  const productsContainer = document.getElementById('produits');
-  const buttons = document.querySelectorAll('.cat-btn');
+  <section class="temoignages">
+    <h2>Ce que disent nos clients</h2>
+    <div class="carousel">
+      <div class="avis actif">“Super produit, design au top !” – Clara</div>
+      <div class="avis">“Livraison rapide et service client parfait.” – Léo</div>
+      <div class="avis">“Je recommande fortement !” – Julien</div>
+    </div>
+  </section>
 
-  function renderProducts(category) {
-    productsContainer.innerHTML = '';
-    allProducts[category].forEach(p => {
-      const div = document.createElement('div');
-      div.classList.add('product');
-      div.dataset.name = p.name;
-      div.dataset.price = p.price;
-      div.dataset.description = p.desc;
-      div.dataset.stock = p.stock;
-      div.innerHTML = `
-        <img src="${p.img}" alt="${p.name}">
-        <h3>${p.name}</h3>
-        <p>${p.price} – Description courte – 20mg</p>
-      `;
-      productsContainer.appendChild(div);
-    });
-    attachProductClick();
-  }
-
-  buttons.forEach((btn, i) => {
-    btn.addEventListener('click', () => {
-      renderProducts(btn.dataset.cat);
-      buttons.forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-    });
-  });
-
-  buttons[0].click();
-
-  // Modal
-  const modalBg = document.getElementById('modal-bg');
-  const modalImg = document.getElementById('modal-img');
-  const modalTitle = document.getElementById('modal-title');
-  const modalPrice = document.getElementById('modal-price');
-  const modalDesc = document.getElementById('modal-description');
-  const modalStock = document.getElementById('modal-stock');
-  const addToCartBtn = document.getElementById('add-to-cart-btn');
-  const modalClose = document.getElementById('modal-close');
-
-  function attachProductClick() {
-    const products = document.querySelectorAll('.product');
-    products.forEach(product => {
-      product.addEventListener('click', () => {
-        modalImg.src = product.querySelector('img').src;
-        modalImg.alt = product.dataset.name;
-        modalTitle.textContent = product.dataset.name;
-        modalPrice.textContent = product.dataset.price;
-        modalDesc.textContent = product.dataset.description || 'Description non disponible.';
-        const stock = parseInt(product.dataset.stock, 10);
-        modalStock.textContent = stock > 0 ? `Stock disponible : ${stock}` : "Rupture de stock";
-        addToCartBtn.disabled = stock <= 0;
-        addToCartBtn.textContent = stock > 0 ? "Ajouter au panier" : "Indisponible";
-        modalBg.classList.add('active');
-        modalBg.setAttribute('aria-hidden', 'false');
-        addToCartBtn.focus();
-      });
-    });
-  }
-
-  modalClose.addEventListener('click', () => {
-    modalBg.classList.remove('active');
-    modalBg.setAttribute('aria-hidden', 'true');
-  });
-
-  modalBg.addEventListener('click', e => {
-    if (e.target === modalBg) {
-      modalBg.classList.remove('active');
-      modalBg.setAttribute('aria-hidden', 'true');
-    }
-  });
-
-  window.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modalBg.classList.contains('active')) {
-      modalBg.classList.remove('active');
-      modalBg.setAttribute('aria-hidden', 'true');
-    }
-  });
-
-  // Recherche
-  const searchInput = document.getElementById('search');
-  const searchResults = document.getElementById('search-results');
-
-  function searchProducts(query) {
-    if (!query) {
-      searchResults.style.display = 'none';
-      searchResults.innerHTML = '';
-      return;
-    }
-    query = query.toLowerCase();
-    const results = [];
-    for (const cat in allProducts) {
-      allProducts[cat].forEach(p => {
-        if (p.name.toLowerCase().includes(query)) {
-          results.push(p);
-        }
-      });
-    }
-    if (results.length === 0) {
-      searchResults.innerHTML = `<div>Aucun résultat</div>`;
-      searchResults.style.display = 'block';
-      return;
-    }
-    searchResults.innerHTML = results.map(p => `<div role="option" tabindex="0">${p.name} — ${p.price}</div>`).join('');
-    searchResults.style.display = 'block';
-
-    // Ajouter click sur résultat recherche
-    const items = searchResults.querySelectorAll('div');
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        openModalByName(item.textContent.split(' — ')[0]);
-        searchResults.style.display = 'none';
-        searchInput.value = '';
-      });
-      item.addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-          item.click();
-        }
-      });
-    });
-  }
-
-  function openModalByName(name) {
-    for (const cat in allProducts) {
-      const p = allProducts[cat].find(pr => pr.name === name);
-      if (p) {
-        modalImg.src = p.img;
-        modalImg.alt = p.name;
-        modalTitle.textContent = p.name;
-        modalPrice.textContent = p.price;
-        modalDesc.textContent = p.desc;
-        modalStock.textContent = p.stock > 0 ? `Stock disponible : ${p.stock}` : "Rupture de stock";
-        addToCartBtn.disabled = p.stock <= 0;
-        addToCartBtn.textContent = p.stock > 0 ? "Ajouter au panier" : "Indisponible";
-        modalBg.classList.add('active');
-        modalBg.setAttribute('aria-hidden', 'false');
-        addToCartBtn.focus();
-        break;
-      }
-    }
-  }
-
-  searchInput.addEventListener('input', e => {
-    searchProducts(e.target.value);
-  });
-
-  document.addEventListener('click', e => {
-    if (!searchResults.contains(e.target) && e.target !== searchInput) {
-      searchResults.style.display = 'none';
-    }
-  });
-
-  // Curseur personnalisé avec paillettes simples
-  const cursor = document.getElementById('custom-cursor');
-
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX - 15 + 'px';
-    cursor.style.top = e.clientY - 15 + 'px';
-    // petit zoom sur hover des boutons et produits
-    if (e.target.closest('a, button, .product, #logo')) {
-      cursor.style.transform = 'scale(1.5)';
-      cursor.style.background = 'radial-gradient(circle, #ff3f8b 70%, transparent 90%)';
-      cursor.style.filter = 'drop-shadow(0 0 10px #ff3f8b)';
-    } else {
-      cursor.style.transform = 'scale(1)';
-      cursor.style.background = 'radial-gradient(circle, #ff3f8b 40%, transparent 60%)';
-      cursor.style.filter = 'drop-shadow(0 0 6px #ff3f8b)';
-    }
-  });
-</script>
-
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Kenzozo. Tous droits réservés.</p>
+      <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
